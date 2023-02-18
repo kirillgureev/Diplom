@@ -26,7 +26,7 @@ public class DataHelper {
     }
 
     public static CardNumber cardNumberZero() { //номер карты нулевой
-        return new CardNumber("0000 0000 0000 0000");
+        return new CardNumber("0000 0000 0000");
     }
 
     public static CardNumber shortCard() { // короткая карта
@@ -44,16 +44,11 @@ public class DataHelper {
     }
 
     public static String zeroMonth() { // нулевой месяц
-        LocalDate currentMonth = LocalDate.now();
-        int month = currentMonth.getMonthValue() - currentMonth.getMonthValue();
-        return String.format("%02d", month);
+        return "0";
     }
 
     public static String thirteenthMonth() { // тринадцатый месяц
-        LocalDate currentMonth = LocalDate.now();
-        int between = (12 - currentMonth.getMonthValue()) + 1;
-        int month = currentMonth.getMonthValue() + between;
-        return String.format("%02d", month);
+        return "13";
     }
 
     public static String emptyMonthField() { // пустое поле месяц
@@ -73,7 +68,7 @@ public class DataHelper {
     }
 
     public static String zeroYear() { // нулевой год
-        return "00";
+        return "0";
     }
 
     public static String emptyYearField() { // пустое поле год

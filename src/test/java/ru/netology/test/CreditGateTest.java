@@ -3,11 +3,9 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import lombok.val;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import ru.netology.data.DataHelper;
+import ru.netology.data.SqlHelper;
 import ru.netology.page.CreditGate;
 import ru.netology.page.HomePage;
 
@@ -44,6 +42,8 @@ public class CreditGateTest {
         val creditGate = new CreditGate();
         creditGate.fillingFieldsFormat(cardNumber, month,year,owner,cvc);
         creditGate.successfulOperation();
+        val paymentStatus = SqlHelper.getCreditApprovedStatus();
+        Assertions.assertEquals("APPROVED", paymentStatus);
     }
     @Test
     void submittingAFormWithAnUnresolvedCard(){ //2 Отправка формы с неразрешенной картой
@@ -57,6 +57,8 @@ public class CreditGateTest {
         val creditGate = new CreditGate();
         creditGate.fillingFieldsFormat(cardNumber, month,year,owner,cvc);
         creditGate.errorOperation();
+        val paymentStatus = SqlHelper.getCreditDeclinedStatus();
+        Assertions.assertEquals("DECLINED", paymentStatus);
     }
     @Test
     void sendingTheFormWithEnteredZerosInTheCardNumberField(){ // 3 Отправка формы с ведёнными нулями в поле "Номер карты"
@@ -69,7 +71,7 @@ public class CreditGateTest {
         val cvc = DataHelper.CVC();
         val creditGate = new CreditGate();
         creditGate.fillingFieldsFormat(cardNumber, month,year,owner,cvc);
-        creditGate.errorOperation();
+        creditGate.checkWrongFormatMessage();
     }
     @Test
     void sendingAFormWithAShortCardNumber(){ // 4 Отправка формы с коротким номером карты
@@ -108,7 +110,7 @@ public class CreditGateTest {
         val cvc = DataHelper.CVC();
         val creditGate = new CreditGate();
         creditGate.fillingFieldsFormat(cardNumber, month,year,owner,cvc);
-        creditGate.checkIncorrectMonth();
+        creditGate.checkIncorrectMonthFormat();
     }
     @Test
     void submittingTheFormWithTheThirteenthMonth(){ // 7 Отправка формы с тринадцатым месяцем
@@ -160,7 +162,7 @@ public class CreditGateTest {
         val cvc = DataHelper.CVC();
         val creditGate = new CreditGate();
         creditGate.fillingFieldsFormat(cardNumber, month,year,owner,cvc);
-        creditGate.checkExpiredYear();
+        creditGate.checkWrongYearFormat();
     }
     @Test
     void submittingAFormWithAnEmptyYearField(){ // 11 Отправка формы с пустым полем "Год"

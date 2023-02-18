@@ -3,12 +3,9 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import lombok.val;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import ru.netology.data.DataHelper;
-import ru.netology.page.CreditGate;
+import ru.netology.data.SqlHelper;
 import ru.netology.page.HomePage;
 import ru.netology.page.PaymentGate;
 
@@ -45,6 +42,8 @@ public class PaymentGateTest {
         val paymentGate = new PaymentGate();
         paymentGate.fillingFieldsFormat(cardNumber, month,year,owner,cvc);
         paymentGate.successfulOperation();
+        val paymentStatus = SqlHelper.getPaymentApprovedStatus();
+        Assertions.assertEquals("APPROVED", paymentStatus);
     }
     @Test
     void submittingAFormWithAnUnresolvedCard(){ //2 Отправка формы с неразрешенной картой
@@ -58,6 +57,8 @@ public class PaymentGateTest {
         val paymentGate = new PaymentGate();
         paymentGate.fillingFieldsFormat(cardNumber, month,year,owner,cvc);
         paymentGate.errorOperation();
+        val paymentStatus = SqlHelper.getCreditDeclinedStatus();
+        Assertions.assertEquals("DECLINED", paymentStatus);
     }
     @Test
     void sendingTheFormWithEnteredZerosInTheCardNumberField(){ // 3 Отправка формы с ведёнными нулями в поле "Номер карты"
@@ -70,7 +71,7 @@ public class PaymentGateTest {
         val cvc = DataHelper.CVC();
         val paymentGate = new PaymentGate();
         paymentGate.fillingFieldsFormat(cardNumber, month,year,owner,cvc);
-        paymentGate.errorOperation();
+        paymentGate.checkWrongFormatMessage();
     }
     @Test
     void sendingAFormWithAShortCardNumber(){ // 4 Отправка формы с коротким номером карты
@@ -109,7 +110,7 @@ public class PaymentGateTest {
         val cvc = DataHelper.CVC();
         val paymentGate = new PaymentGate();
         paymentGate.fillingFieldsFormat(cardNumber, month,year,owner,cvc);
-        paymentGate.checkIncorrectMonth();
+        paymentGate.checkIncorrectMonthFormat();
     }
     @Test
     void submittingTheFormWithTheThirteenthMonth(){ // 7 Отправка формы с тринадцатым месяцем
@@ -161,7 +162,7 @@ public class PaymentGateTest {
         val cvc = DataHelper.CVC();
         val paymentGate = new PaymentGate();
         paymentGate.fillingFieldsFormat(cardNumber, month,year,owner,cvc);
-        paymentGate.checkExpiredYear();
+        paymentGate.checkWrongYearFormat();
     }
     @Test
     void submittingAFormWithAnEmptyYearField(){ // 11 Отправка формы с пустым полем "Год"
