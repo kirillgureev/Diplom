@@ -8,7 +8,7 @@ import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.$x;
 
-public class CreditGate {
+public class  CreditGate {
     private final SelenideElement cardNumberField = $x("//span[text() = 'Номер карты']/..//input");
     private final SelenideElement fieldMonth = $x("//span[text() = 'Месяц']/..//input");
     private final SelenideElement fieldYear = $x("//span[text() = 'Год']/..//input");

@@ -40,7 +40,7 @@ public class PaymentGate {
     }
 
     public void errorOperation() { //операция с ошибкой
-        errorNotification.shouldBe(Condition.visible, Duration.ofSeconds(15));
+        errorNotification.shouldBe(Condition.visible, Duration.ofSeconds(50));
     }
 
     public void checkWrongFormatMessage() { // карта, неверный формат

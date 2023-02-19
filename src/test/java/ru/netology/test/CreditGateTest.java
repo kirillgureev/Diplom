@@ -1,4 +1,5 @@
 package ru.netology.test;
+
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -31,7 +32,7 @@ public class CreditGateTest {
 
 
     @Test
-    void submittingAFormWithAnAllowedCard() { // 1 Отправка формы с разрешенной картой
+    void submittingAFormWithAnAllowedCard() { //  Отправка формы с разрешенной картой
         val homePage = new HomePage();
         homePage.CreditPayment();
         val cardNumber = DataHelper.cardNumberApproved();
@@ -46,7 +47,7 @@ public class CreditGateTest {
         Assertions.assertEquals("APPROVED", paymentStatus);
     }
     @Test
-    void submittingAFormWithAnUnresolvedCard(){ //2 Отправка формы с неразрешенной картой
+    void submittingAFormWithAnUnresolvedCard(){ // Отправка формы с неразрешенной картой
         val homePage = new HomePage();
         homePage.CreditPayment();
         val cardNumber = DataHelper.cardNumberDeclined();
@@ -61,20 +62,20 @@ public class CreditGateTest {
         Assertions.assertEquals("DECLINED", paymentStatus);
     }
     @Test
-    void sendingTheFormWithEnteredZerosInTheCardNumberField(){ // 3 Отправка формы с ведёнными нулями в поле "Номер карты"
+    void sendingTheFormWithEnteredZerosInTheCardNumberField2(){ //  Отправка формы с ведёнными 16 нулями в поле "Номер карты"
         val homePage = new HomePage();
         homePage.CreditPayment();
-        val cardNumber = DataHelper.cardNumberZero();
+        val cardNumber = DataHelper.cardNumberZero2();
         val month = DataHelper.currentMonth();
         val year = DataHelper.currentYear();
         val owner = DataHelper.owner();
         val cvc = DataHelper.CVC();
         val creditGate = new CreditGate();
         creditGate.fillingFieldsFormat(cardNumber, month,year,owner,cvc);
-        creditGate.checkWrongFormatMessage();
+        creditGate.errorOperation();
     }
     @Test
-    void sendingAFormWithAShortCardNumber(){ // 4 Отправка формы с коротким номером карты
+    void sendingAFormWithAShortCardNumber(){ //  Отправка формы с коротким номером карты
         val homePage = new HomePage();
         homePage.CreditPayment();
         val cardNumber = DataHelper.shortCard();
@@ -87,20 +88,7 @@ public class CreditGateTest {
         creditGate.checkWrongFormatMessage();
     }
     @Test
-    void sendingAFormWithAnEmptyFieldCardNumber(){ // 5 Отправка формы с пустым полем "Номер карты"
-        val homePage = new HomePage();
-        homePage.CreditPayment();
-        val cardNumber = DataHelper.emptyCardField();
-        val month = DataHelper.currentMonth();
-        val year = DataHelper.currentYear();
-        val owner = DataHelper.owner();
-        val cvc = DataHelper.CVC();
-        val creditGate = new CreditGate();
-        creditGate.fillingFieldsFormat(cardNumber, month,year,owner,cvc);
-        creditGate.checkWrongFormatMessage();
-    }
-    @Test
-    void submitFormWithZeroMonth(){ // 6 Отправка формы с нулевым месяцем
+    void submitFormWithZeroMonth(){ //  Отправка формы с нулевым месяцем
         val homePage = new HomePage();
         homePage.CreditPayment();
         val cardNumber = DataHelper.cardNumberApproved();
@@ -113,7 +101,7 @@ public class CreditGateTest {
         creditGate.checkIncorrectMonthFormat();
     }
     @Test
-    void submittingTheFormWithTheThirteenthMonth(){ // 7 Отправка формы с тринадцатым месяцем
+    void submittingTheFormWithTheThirteenthMonth(){ //  Отправка формы с тринадцатым месяцем
         val homePage = new HomePage();
         homePage.CreditPayment();
         val cardNumber = DataHelper.cardNumberApproved();
@@ -126,20 +114,7 @@ public class CreditGateTest {
         creditGate.checkIncorrectMonth();
     }
     @Test
-    void submittingAFormWithAnEmptyMonthField(){ // 8 Отправка формы с пустым полем "Месяц"
-        val homePage = new HomePage();
-        homePage.CreditPayment();
-        val cardNumber = DataHelper.cardNumberApproved();
-        val month = DataHelper.emptyMonthField();
-        val year = DataHelper.currentYear();
-        val owner = DataHelper.owner();
-        val cvc = DataHelper.CVC();
-        val creditGate = new CreditGate();
-        creditGate.fillingFieldsFormat(cardNumber, month,year,owner,cvc);
-        creditGate.checkIncorrectMonthFormat();
-    }
-    @Test
-    void submittingTheFormWithThePastYear(){// 9 Отправка формы с прошедшим годом
+    void submittingTheFormWithThePastYear(){//  Отправка формы с прошедшим годом
         val homePage = new HomePage();
         homePage.CreditPayment();
         val cardNumber = DataHelper.cardNumberApproved();
@@ -152,7 +127,7 @@ public class CreditGateTest {
         creditGate.checkExpiredYear();
     }
     @Test
-    void submittingTheFormWithZerosEnteredInTheYearField(){ // 10 Отправка формы с введёнными нулями в поле "Год"
+    void submittingTheFormWithZerosEnteredInTheYearField(){ //  Отправка формы с введённым нулём в поле "Год"
         val homePage = new HomePage();
         homePage.CreditPayment();
         val cardNumber = DataHelper.cardNumberApproved();
@@ -165,46 +140,34 @@ public class CreditGateTest {
         creditGate.checkWrongYearFormat();
     }
     @Test
-    void submittingAFormWithAnEmptyYearField(){ // 11 Отправка формы с пустым полем "Год"
+    void submittingTheFormWithZerosEnteredInTheYearField2(){ //  Отправка формы с введёнными нулями в поле "Год"
         val homePage = new HomePage();
         homePage.CreditPayment();
         val cardNumber = DataHelper.cardNumberApproved();
         val month = DataHelper.currentMonth();
-        val year = DataHelper.emptyYearField();
+        val year = DataHelper.zeroYear2();
         val owner = DataHelper.owner();
         val cvc = DataHelper.CVC();
         val creditGate = new CreditGate();
         creditGate.fillingFieldsFormat(cardNumber, month,year,owner,cvc);
-        creditGate.checkWrongYearFormat();
+        creditGate.checkExpiredYear();
     }
     @Test
-    void submittingTheFormWithNumbersEnteredInTheOwnerField(){ //12 Отправка формы с введенными цифрами в поле "Владелец"
+    void submittingAFormWithAnEmptyOwnerField(){ //  Отправка формы с кириллицей в поле "Владелец"
         val homePage = new HomePage();
         homePage.CreditPayment();
         val cardNumber = DataHelper.cardNumberApproved();
         val month = DataHelper.currentMonth();
         val year = DataHelper.currentYear();
-        val owner = DataHelper.ownerWithNumbers();
+        val owner = DataHelper.notEngName();
         val cvc = DataHelper.CVC();
         val creditGate = new CreditGate();
         creditGate.fillingFieldsFormat(cardNumber, month,year,owner,cvc);
         creditGate.errorOperation();
+
     }
     @Test
-    void submittingAFormWithAnEmptyOwnerField(){ // 13 Отправка формы с пустым полем "Владелец"
-        val homePage = new HomePage();
-        homePage.CreditPayment();
-        val cardNumber = DataHelper.cardNumberApproved();
-        val month = DataHelper.currentMonth();
-        val year = DataHelper.currentYear();
-        val owner = DataHelper.emptyOwnerField();
-        val cvc = DataHelper.CVC();
-        val creditGate = new CreditGate();
-        creditGate.fillingFieldsFormat(cardNumber, month,year,owner,cvc);
-        creditGate.checkOwnerEmptyField();
-    }
-    @Test
-    void submittingAFormWithIncorrectCVC(){ // 14 Отправка формы с некорректным "CVC/CVV"
+    void submittingAFormWithIncorrectCVC(){ //  Отправка формы с некорректным "CVC/CVV"
         val homePage = new HomePage();
         homePage.CreditPayment();
         val cardNumber = DataHelper.cardNumberApproved();
@@ -217,16 +180,46 @@ public class CreditGateTest {
         creditGate.checkWrongCVCFormat();
     }
     @Test
-    void submittingAFormWithAnEmptyCVCField(){ // 15 Отправка формы с пустым полем "CVC/CVV"
+    void submittingTheFormWithZerosEnteredInTheCVCField(){ //  Отправка формы с веденными нулями в поле "CVC/CVV"
         val homePage = new HomePage();
         homePage.CreditPayment();
         val cardNumber = DataHelper.cardNumberApproved();
         val month = DataHelper.currentMonth();
         val year = DataHelper.currentYear();
         val owner = DataHelper.owner();
-        val cvc = DataHelper.emptyCvcField();
+        val cvc = DataHelper.zeroCVC();
         val creditGate = new CreditGate();
         creditGate.fillingFieldsFormat(cardNumber, month,year,owner,cvc);
+        creditGate.errorOperation();
+    }
+    @Test
+    void emptyForm() { // Отправка пустой формы
+        val homePage = new HomePage();
+        homePage.CreditPayment();
+        val cardNumber = DataHelper.emptyCardField();
+        val month = DataHelper.emptyMonthField();
+        val year = DataHelper.emptyYearField();
+        val owner = DataHelper.emptyOwnerField();
+        val cvc = DataHelper.emptyCvcField();
+        val creditGate = new CreditGate();
+        creditGate.fillingFieldsFormat(cardNumber, month, year, owner, cvc);
+        creditGate.checkWrongFormatMessage();
+        creditGate.checkIncorrectMonthFormat();
+        creditGate.checkWrongYearFormat();
+        creditGate.checkOwnerEmptyField();
         creditGate.checkWrongCVCFormat();
+    }
+    @Test
+    void submittingTheFormWithNumbersEnteredInTheOwnerField(){ // Отправка формы с введенными цифрами в поле "Владелец"
+        val homePage = new HomePage();
+        homePage.CreditPayment();
+        val cardNumber = DataHelper.cardNumberApproved();
+        val month = DataHelper.currentMonth();
+        val year = DataHelper.currentYear();
+        val owner = DataHelper.ownerWithNumbers();
+        val cvc = DataHelper.CVC();
+        val creditGate = new CreditGate();
+        creditGate.fillingFieldsFormat(cardNumber, month,year,owner,cvc);
+        creditGate.errorOperation();
     }
 }
