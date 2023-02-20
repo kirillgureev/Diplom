@@ -1,9 +1,7 @@
 package ru.netology.page;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import ru.netology.data.DataHelper;
 
 import java.time.Duration;
 
@@ -26,8 +24,8 @@ public class PaymentGate {
     private final SelenideElement emptyOwnerField = $x("//span[@class = 'input__top' and text() = 'Владелец']/..//span[text()='Поле обязательно для заполнения']");
     private final SelenideElement incorrectCVCFormat = $x("//span[@class = 'input__top' and text() = 'CVC/CVV']/..//span[text()='Неверный формат']");
 
-    public void fillingFieldsFormat(DataHelper.CardNumber info, String month, String year, String owner, String cvc) {
-        cardNumberField.setValue(info.getCardNumber());
+    public void fillingFieldsFormat(String cardNumber, String month, String year, String owner, String cvc) {
+        cardNumberField.setValue(cardNumber);
         fieldMonth.setValue(month);
         fieldYear.setValue(year);
         fieldOwner.setValue(owner);
