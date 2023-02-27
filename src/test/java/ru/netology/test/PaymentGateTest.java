@@ -32,187 +32,187 @@ public class PaymentGateTest {
 
     @Test
     void submittingAFormWithAnAllowedCard() { //  Отправка формы с разрешенной картой
-        var homePage = new HomePage();
+        HomePage homePage = new HomePage();
         homePage.DebitCardPayment();
-        var cardNumber = DataHelper.cardNumberApproved();
-        var month = DataHelper.currentMonth();
-        var year = DataHelper.currentYear();
-        var owner = DataHelper.owner();
-        var cvc = DataHelper.CVC();
-        var paymentGate = new PaymentGate();
+        String cardNumber = DataHelper.cardNumberApproved();
+        String month = DataHelper.currentMonth();
+        String year = DataHelper.currentYear();
+        String owner = DataHelper.owner();
+        String cvc = DataHelper.CVC();
+        PaymentGate paymentGate = new PaymentGate();
         paymentGate.fillingFieldsFormat(cardNumber, month, year, owner, cvc);
         paymentGate.successfulOperation();
-        var paymentStatus = SqlHelper.getPaymentApprovedStatus();
+        String paymentStatus = SqlHelper.getPaymentApprovedStatus();
         Assertions.assertEquals("APPROVED", paymentStatus);
     }
 
     @Test
     void submittingAFormWithAnUnresolvedCard() { // Отправка формы с неразрешенной картой
-        var homePage = new HomePage();
+        HomePage homePage = new HomePage();
         homePage.DebitCardPayment();
-        var cardNumber = DataHelper.cardNumberDeclined();
-        var month = DataHelper.currentMonth();
-        var year = DataHelper.currentYear();
-        var owner = DataHelper.owner();
-        var cvc = DataHelper.CVC();
-        var paymentGate = new PaymentGate();
+        String cardNumber = DataHelper.cardNumberDeclined();
+        String month = DataHelper.currentMonth();
+        String year = DataHelper.currentYear();
+        String owner = DataHelper.owner();
+        String cvc = DataHelper.CVC();
+        PaymentGate paymentGate = new PaymentGate();
         paymentGate.fillingFieldsFormat(cardNumber, month, year, owner, cvc);
         paymentGate.errorOperation();
-        var paymentStatus = SqlHelper.getPaymentDeclinedStatus();
+        String paymentStatus = SqlHelper.getPaymentDeclinedStatus();
         Assertions.assertEquals("DECLINED", paymentStatus);
     }
 
 
     @Test
     void sendingTheFormWithEnteredZerosInTheCardNumberField2() { //  Отправка формы с ведёнными 16 нулями в поле "Номер карты"
-        var homePage = new HomePage();
+        HomePage homePage = new HomePage();
         homePage.DebitCardPayment();
-        var cardNumber = DataHelper.cardNumberZero2();
-        var month = DataHelper.currentMonth();
-        var year = DataHelper.currentYear();
-        var owner = DataHelper.owner();
-        var cvc = DataHelper.CVC();
-        var paymentGate = new PaymentGate();
+        String cardNumber = DataHelper.cardNumberZero2();
+        String month = DataHelper.currentMonth();
+        String year = DataHelper.currentYear();
+        String owner = DataHelper.owner();
+        String cvc = DataHelper.CVC();
+        PaymentGate paymentGate = new PaymentGate();
         paymentGate.fillingFieldsFormat(cardNumber, month, year, owner, cvc);
         paymentGate.errorOperation();
     }
 
     @Test
     void sendingAFormWithAShortCardNumber() { //  Отправка формы с коротким номером карты
-        var homePage = new HomePage();
+        HomePage homePage = new HomePage();
         homePage.DebitCardPayment();
-        var cardNumber = DataHelper.shortCard();
-        var month = DataHelper.currentMonth();
-        var year = DataHelper.currentYear();
-        var owner = DataHelper.owner();
-        var cvc = DataHelper.CVC();
-        var paymentGate = new PaymentGate();
+        String cardNumber = DataHelper.shortCard();
+        String month = DataHelper.currentMonth();
+        String year = DataHelper.currentYear();
+        String owner = DataHelper.owner();
+        String cvc = DataHelper.CVC();
+        PaymentGate paymentGate = new PaymentGate();
         paymentGate.fillingFieldsFormat(cardNumber, month, year, owner, cvc);
         paymentGate.checkWrongFormatMessage();
     }
 
     @Test
     void submitFormWithZeroMonth() { //  Отправка формы с нулевым месяцем
-        var homePage = new HomePage();
+        HomePage homePage = new HomePage();
         homePage.DebitCardPayment();
-        var cardNumber = DataHelper.cardNumberApproved();
-        var month = DataHelper.zeroMonth();
-        var year = DataHelper.currentYear();
-        var owner = DataHelper.owner();
-        var cvc = DataHelper.CVC();
-        var paymentGate = new PaymentGate();
+        String cardNumber = DataHelper.cardNumberApproved();
+        String month = DataHelper.zeroMonth();
+        String year = DataHelper.currentYear();
+        String owner = DataHelper.owner();
+        String cvc = DataHelper.CVC();
+        PaymentGate paymentGate = new PaymentGate();
         paymentGate.fillingFieldsFormat(cardNumber, month, year, owner, cvc);
         paymentGate.checkIncorrectMonthFormat();
     }
 
     @Test
     void submittingTheFormWithTheThirteenthMonth() { //  Отправка формы с тринадцатым месяцем
-        var homePage = new HomePage();
+        HomePage homePage = new HomePage();
         homePage.DebitCardPayment();
-        var cardNumber = DataHelper.cardNumberApproved();
-        var month = DataHelper.thirteenthMonth();
-        var year = DataHelper.currentYear();
-        var owner = DataHelper.owner();
-        var cvc = DataHelper.CVC();
-        var paymentGate = new PaymentGate();
+        String cardNumber = DataHelper.cardNumberApproved();
+        String month = DataHelper.thirteenthMonth();
+        String year = DataHelper.currentYear();
+        String owner = DataHelper.owner();
+        String cvc = DataHelper.CVC();
+        PaymentGate paymentGate = new PaymentGate();
         paymentGate.fillingFieldsFormat(cardNumber, month, year, owner, cvc);
         paymentGate.checkIncorrectMonth();
     }
 
     @Test
     void submittingTheFormWithThePastYear() { //  Отправка формы с прошедшим годом
-        var homePage = new HomePage();
+        HomePage homePage = new HomePage();
         homePage.DebitCardPayment();
-        var cardNumber = DataHelper.cardNumberApproved();
-        var month = DataHelper.currentMonth();
-        var year = DataHelper.lastYear();
-        var owner = DataHelper.owner();
-        var cvc = DataHelper.CVC();
-        var paymentGate = new PaymentGate();
+        String cardNumber = DataHelper.cardNumberApproved();
+        String month = DataHelper.currentMonth();
+        String year = DataHelper.lastYear();
+        String owner = DataHelper.owner();
+        String cvc = DataHelper.CVC();
+        PaymentGate paymentGate = new PaymentGate();
         paymentGate.fillingFieldsFormat(cardNumber, month, year, owner, cvc);
         paymentGate.checkExpiredYear();
     }
 
     @Test
     void submittingTheFormWithZerosEnteredInTheYearField() { //  Отправка формы с введённым нулём в поле "Год"
-        var homePage = new HomePage();
+        HomePage homePage = new HomePage();
         homePage.DebitCardPayment();
-        var cardNumber = DataHelper.cardNumberApproved();
-        var month = DataHelper.currentMonth();
-        var year = DataHelper.zeroYear();
-        var owner = DataHelper.owner();
-        var cvc = DataHelper.CVC();
-        var paymentGate = new PaymentGate();
+        String cardNumber = DataHelper.cardNumberApproved();
+        String month = DataHelper.currentMonth();
+        String year = DataHelper.zeroYear();
+        String owner = DataHelper.owner();
+        String cvc = DataHelper.CVC();
+        PaymentGate paymentGate = new PaymentGate();
         paymentGate.fillingFieldsFormat(cardNumber, month, year, owner, cvc);
         paymentGate.checkWrongYearFormat();
     }
 
     @Test
     void submittingTheFormWithZerosEnteredInTheYearField2() { //  Отправка формы с введёнными нулями в поле "Год"
-        var homePage = new HomePage();
+        HomePage homePage = new HomePage();
         homePage.DebitCardPayment();
-        var cardNumber = DataHelper.cardNumberApproved();
-        var month = DataHelper.currentMonth();
-        var year = DataHelper.zeroYear2();
-        var owner = DataHelper.owner();
-        var cvc = DataHelper.CVC();
-        var paymentGate = new PaymentGate();
+        String cardNumber = DataHelper.cardNumberApproved();
+        String month = DataHelper.currentMonth();
+        String year = DataHelper.zeroYear2();
+        String owner = DataHelper.owner();
+        String cvc = DataHelper.CVC();
+        PaymentGate paymentGate = new PaymentGate();
         paymentGate.fillingFieldsFormat(cardNumber, month, year, owner, cvc);
         paymentGate.checkExpiredYear();
     }
 
     @Test
     void submittingAFormWithAnEmptyOwnerField() { //  Отправка формы с кириллицей в поле "Владелец"
-        var homePage = new HomePage();
+        HomePage homePage = new HomePage();
         homePage.DebitCardPayment();
-        var cardNumber = DataHelper.cardNumberApproved();
-        var month = DataHelper.currentMonth();
-        var year = DataHelper.currentYear();
-        var owner = DataHelper.notEngName();
-        var cvc = DataHelper.CVC();
-        var paymentGate = new PaymentGate();
+        String cardNumber = DataHelper.cardNumberApproved();
+        String month = DataHelper.currentMonth();
+        String year = DataHelper.currentYear();
+        String owner = DataHelper.notEngName();
+        String cvc = DataHelper.CVC();
+        PaymentGate paymentGate = new PaymentGate();
         paymentGate.fillingFieldsFormat(cardNumber, month, year, owner, cvc);
         paymentGate.errorOperation();
     }
 
     @Test
     void submittingAFormWithIncorrectCVC() { //  Отправка формы с некорректным "CVC/CVV"
-        var homePage = new HomePage();
+        HomePage homePage = new HomePage();
         homePage.DebitCardPayment();
-        var cardNumber = DataHelper.cardNumberApproved();
-        var month = DataHelper.currentMonth();
-        var year = DataHelper.currentYear();
-        var owner = DataHelper.owner();
-        var cvc = DataHelper.wrongCVC();
-        var paymentGate = new PaymentGate();
+        String cardNumber = DataHelper.cardNumberApproved();
+        String month = DataHelper.currentMonth();
+        String year = DataHelper.currentYear();
+        String owner = DataHelper.owner();
+        String cvc = DataHelper.wrongCVC();
+        PaymentGate paymentGate = new PaymentGate();
         paymentGate.fillingFieldsFormat(cardNumber, month, year, owner, cvc);
         paymentGate.checkWrongCVCFormat();
     }
 
     @Test
     void submittingTheFormWithZerosEnteredInTheCVCField() { //  Отправка формы с веденными нулями в поле "CVC/CVV"
-        var homePage = new HomePage();
+        HomePage homePage = new HomePage();
         homePage.DebitCardPayment();
-        var cardNumber = DataHelper.cardNumberApproved();
-        var month = DataHelper.currentMonth();
-        var year = DataHelper.currentYear();
-        var owner = DataHelper.owner();
-        var cvc = DataHelper.zeroCVC();
-        var paymentGate = new PaymentGate();
+        String cardNumber = DataHelper.cardNumberApproved();
+        String month = DataHelper.currentMonth();
+        String year = DataHelper.currentYear();
+        String owner = DataHelper.owner();
+        String cvc = DataHelper.zeroCVC();
+        PaymentGate paymentGate = new PaymentGate();
         paymentGate.fillingFieldsFormat(cardNumber, month, year, owner, cvc);
         paymentGate.errorOperation();
     }
 
     @Test
     void emptyForm() { // Отправка пустой формы
-        var homePage = new HomePage();
+        HomePage homePage = new HomePage();
         homePage.DebitCardPayment();
-        var cardNumber = DataHelper.emptyCardField();
-        var month = DataHelper.emptyFields(); //DataHelper.emptyMonthField();
-        var year = DataHelper.emptyFields(); //DataHelper.emptyYearField();
-        var owner = DataHelper.emptyFields(); //DataHelper.emptyOwnerField();
-        var cvc = DataHelper.emptyFields(); //DataHelper.emptyCvcField();
-        var paymentGate = new PaymentGate();
+        String cardNumber = DataHelper.emptyCardField();
+        String month = DataHelper.emptyFields(); //DataHelper.emptyMonthField();
+        String year = DataHelper.emptyFields(); //DataHelper.emptyYearField();
+        String owner = DataHelper.emptyFields(); //DataHelper.emptyOwnerField();
+        String cvc = DataHelper.emptyFields(); //DataHelper.emptyCvcField();
+        PaymentGate paymentGate = new PaymentGate();
         paymentGate.fillingFieldsFormat(cardNumber, month, year, owner, cvc);
         paymentGate.checkWrongFormatMessage();
         paymentGate.checkIncorrectMonthFormat();
@@ -223,14 +223,14 @@ public class PaymentGateTest {
 
     @Test
     void submittingTheFormWithNumbersEnteredInTheOwnerField() { // Отправка формы с введенными цифрами в поле "Владелец"
-        var homePage = new HomePage();
+        HomePage homePage = new HomePage();
         homePage.DebitCardPayment();
-        var cardNumber = DataHelper.cardNumberApproved();
-        var month = DataHelper.currentMonth();
-        var year = DataHelper.currentYear();
-        var owner = DataHelper.ownerWithNumbers();
-        var cvc = DataHelper.CVC();
-        var paymentGate = new PaymentGate();
+        String cardNumber = DataHelper.cardNumberApproved();
+        String month = DataHelper.currentMonth();
+        String year = DataHelper.currentYear();
+        String owner = DataHelper.ownerWithNumbers();
+        String cvc = DataHelper.CVC();
+        PaymentGate paymentGate = new PaymentGate();
         paymentGate.fillingFieldsFormat(cardNumber, month, year, owner, cvc);
         paymentGate.errorOperation();
     }
