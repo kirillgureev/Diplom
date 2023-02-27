@@ -3,7 +3,6 @@ package ru.netology.test;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
-//import lombok.val;
 import org.junit.jupiter.api.*;
 import ru.netology.data.DataHelper;
 import ru.netology.data.SqlHelper;
@@ -37,7 +36,7 @@ public class CreditGateTest {
         homePage.CreditPayment();
         var cardNumber = DataHelper.cardNumberApproved();
         var month = DataHelper.currentMonth();
-        var year = DataHelper.currentYearV2();
+        var year = DataHelper.currentYear();
         var owner = DataHelper.owner();
         var cvc = DataHelper.CVC();
         var creditGate = new CreditGate();
@@ -52,7 +51,7 @@ public class CreditGateTest {
         homePage.CreditPayment();
         var cardNumber = DataHelper.cardNumberDeclined();
         var month = DataHelper.currentMonth();
-        var year = DataHelper.currentYearV2();
+        var year = DataHelper.currentYear();
         var owner = DataHelper.owner();
         var cvc = DataHelper.CVC();
         var creditGate = new CreditGate();
@@ -67,7 +66,7 @@ public class CreditGateTest {
         homePage.CreditPayment();
         var cardNumber = DataHelper.cardNumberZero2();
         var month = DataHelper.currentMonth();
-        var year = DataHelper.currentYearV2();
+        var year = DataHelper.currentYear();
         var owner = DataHelper.owner();
         var cvc = DataHelper.CVC();
         var creditGate = new CreditGate();
@@ -80,7 +79,7 @@ public class CreditGateTest {
         homePage.CreditPayment();
         var cardNumber = DataHelper.shortCard();
         var month = DataHelper.currentMonth();
-        var year = DataHelper.currentYearV2();
+        var year = DataHelper.currentYear();
         var owner = DataHelper.owner();
         var cvc = DataHelper.CVC();
         var creditGate = new CreditGate();
@@ -93,7 +92,7 @@ public class CreditGateTest {
         homePage.CreditPayment();
         var cardNumber = DataHelper.cardNumberApproved();
         var month = DataHelper.zeroMonth();
-        var year = DataHelper.currentYearV2();
+        var year = DataHelper.currentYear();
         var owner = DataHelper.owner();
         var cvc = DataHelper.CVC();
         var creditGate = new CreditGate();
@@ -106,7 +105,7 @@ public class CreditGateTest {
         homePage.CreditPayment();
         var cardNumber = DataHelper.cardNumberApproved();
         var month = DataHelper.thirteenthMonth();
-        var year = DataHelper.currentYearV2();
+        var year = DataHelper.currentYear();
         var owner = DataHelper.owner();
         var cvc = DataHelper.CVC();
         var creditGate = new CreditGate();
@@ -114,7 +113,7 @@ public class CreditGateTest {
         creditGate.checkIncorrectMonth();
     }
     @Test
-    void submittingTheFormWithThePastYear(){//  Отправка формы с прошедшим годом
+    void submittingTheFormWithThePastYear(){ //  Отправка формы с прошедшим годом
         var homePage = new HomePage();
         homePage.CreditPayment();
         var cardNumber = DataHelper.cardNumberApproved();
@@ -158,7 +157,7 @@ public class CreditGateTest {
         homePage.CreditPayment();
         var cardNumber = DataHelper.cardNumberApproved();
         var month = DataHelper.currentMonth();
-        var year = DataHelper.currentYearV2();
+        var year = DataHelper.currentYear();
         var owner = DataHelper.notEngName();
         var cvc = DataHelper.CVC();
         var creditGate = new CreditGate();
@@ -172,7 +171,7 @@ public class CreditGateTest {
         homePage.CreditPayment();
         var cardNumber = DataHelper.cardNumberApproved();
         var month = DataHelper.currentMonth();
-        var year = DataHelper.currentYearV2();
+        var year = DataHelper.currentYear();
         var owner = DataHelper.owner();
         var cvc = DataHelper.wrongCVC();
         var creditGate = new CreditGate();
@@ -185,7 +184,7 @@ public class CreditGateTest {
         homePage.CreditPayment();
         var cardNumber = DataHelper.cardNumberApproved();
         var month = DataHelper.currentMonth();
-        var year = DataHelper.currentYearV2();
+        var year = DataHelper.currentYear();
         var owner = DataHelper.owner();
         var cvc = DataHelper.zeroCVC();
         var creditGate = new CreditGate();
@@ -215,7 +214,7 @@ public class CreditGateTest {
         homePage.CreditPayment();
         var cardNumber = DataHelper.cardNumberApproved();
         var month = DataHelper.currentMonth();
-        var year = DataHelper.currentYearV2();
+        var year = DataHelper.currentYear();
         var owner = DataHelper.ownerWithNumbers();
         var cvc = DataHelper.CVC();
         var creditGate = new CreditGate();

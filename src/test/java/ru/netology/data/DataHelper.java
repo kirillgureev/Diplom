@@ -1,8 +1,12 @@
 package ru.netology.data;
 
 import com.github.javafaker.Faker;
+
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class DataHelper {
@@ -50,17 +54,18 @@ public class DataHelper {
         return "13";
     }
 
-    public static String currentYearV2() {//текущи год в.2
-        LocalDate localDate = LocalDate.now();//For reference
+    public static String currentYear() {//текущи год
+        LocalDate localDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy");
-        String formattedString = localDate.format(formatter);
-        return formattedString;
+        return localDate.format(formatter);
     }
 
     public static String lastYear() { //прошедший год
-        LocalDate lastYear = LocalDate.now();
-        int year = lastYear.getYear();
-        return Integer.toString(year);
+        Calendar cal  = Calendar.getInstance();
+        //от текущего года вычитаем 1 год
+        cal.add(Calendar.YEAR, -1);
+        SimpleDateFormat lastYear = new SimpleDateFormat("yy");
+        return lastYear.format(new Date(cal.getTimeInMillis()));
     }
 
     public static String zeroYear() { //нулевой год

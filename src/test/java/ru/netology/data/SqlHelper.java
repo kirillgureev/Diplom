@@ -1,7 +1,6 @@
 package ru.netology.data;
 
 import lombok.SneakyThrows;
-//import lombok.var;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 
@@ -17,6 +16,7 @@ public class SqlHelper {
     private static String password = System.getProperty("db.password");
     private static Connection connection;
 
+    @SneakyThrows
     public static Connection getConnect(){
         try {
             connection = DriverManager.getConnection(url, user, password);
@@ -25,6 +25,7 @@ public class SqlHelper {
         }
         return connection;
     }
+    @SneakyThrows
     public static String getPaymentApprovedStatus(){
         var codeSQL = "SELECT * FROM payment_entity JOIN order_entity ON transaction_id = payment_id where status = 'APPROVED'";
         try (Connection connection = getConnect()){
@@ -35,6 +36,7 @@ public class SqlHelper {
         }
         return null;
     }
+    @SneakyThrows
     public static String getPaymentDeclinedStatus(){
         var codeSQL = "SELECT * FROM payment_entity JOIN order_entity ON transaction_id = payment_id where status = 'DECLINED'";
         try (Connection connection = getConnect()){
